@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Corretores</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .chart-container {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Análise de Desempenho dos Corretores</h1>
+    
+    <div class="chart-container">
+        <h2>Captações por Corretor</h2>
+        <canvas id="captacoesChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Atendimentos por Corretor</h2>
+        <canvas id="atendimentosChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h2>Visitas por Corretor</h2>
+        <canvas id="visitasChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>Taxa de Conversão (Visitas/Atendimentos)</h2>
+        <canvas id="conversaoChart"></canvas>
+    </div>
+
+    <script>
+        const labels = ["Aleandra", "Diego", "Diferencial", "Diogo", "Emanuelle", "Erick", "Fabiano", "Fabricio", "Gabriel", "Guilherme L.", "Guilherme M.", "Jeferson", "Jorge", "Lais", "Luciana", "Marcelo", "Mateus", "Melissa", "Nathalia", "Nicolle", "Rafael", "Ricardo", "Rodrigo", "Waldir"];
+        
+        const captacoesData = [3, 0, 0, 3, 2, 3, 3, 0, 5, 10, 4, 1, 2, 1, 0, 1, 0, 6, 1, 0, 4, 0, 0, 0];
+        const atendimentosData = [21, 5, 323, 74, 21, 14, 36, 62, 39, 0, 13, 22, 69, 73, 46, 7, 39, 49, 61, 47, 20, 39, 2, 28];
+        const visitasData = [5, 5, 0, 4, 7, 6, 13, 12, 14, 0, 0, 3, 45, 10, 25, 3, 3, 14, 6, 10, 8, 13, 0, 7];
+        
+        const conversaoData = atendimentosData.map((atendimento, index) => {
+            const visita = visitasData[index];
+            return atendimento === 0 ? 0 : (visita / atendimento).toFixed(2);
+        });
+
+        const createChart = (ctx, label, data, color) => {
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: color,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+
+        const captacoesCtx = document.getElementById('captacoesChart').getContext('2d');
+        createChart(captacoesCtx, 'Captações', captacoesData, 'rgba(75, 192, 192, 0.6)');
+
+        const atendimentosCtx = document.getElementById('atendimentosChart').getContext('2d');
+        createChart(atendimentosCtx, 'Atendimentos', atendimentosData, 'rgba(153, 102, 255, 0.6)');
+
+        const visitasCtx = document.getElementById('visitasChart').getContext('2d');
+        createChart(visitasCtx, 'Visitas', visitasData, 'rgba(255, 159, 64, 0.6)');
+
+        const conversaoCtx = document.getElementById('conversaoChart').getContext('2d');
+        createChart(conversaoCtx, 'Taxa de Conversão', conversaoData, 'rgba(54, 162, 235, 0.6)');
+    </script>
+</body>
+</html>

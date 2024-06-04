@@ -9,6 +9,9 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+        h1, h2 {
+            text-align: center;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -24,10 +27,18 @@
         th {
             background-color: #f2f2f2;
         }
+        .chart {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
     <h1>Análise de Corretores</h1>
+    
+    <h2>Dados Brutos</h2>
     <table>
         <tr>
             <th>Corretor</th>
@@ -177,8 +188,58 @@
             <td>Waldir Alves</td>
             <td>0</td>
             <td>28</td>
-            <td>0</td>
+            <td>7</td>
         </tr>
     </table>
-</body>
-</html>
+
+    <h2>Insights e Análises</h2>
+    <h3>Top Performers em Captações</h3>
+    <p>Guilherme Lemos Filho é o corretor com o maior número de captações (10), seguido por Melissa Pizzano (6) e Gabriel Polli Barbosa Neves (5).</p>
+
+    <h3>Top Performers em Atendimentos</h3>
+    <p>Diferencial Imóveis lidera com 323 atendimentos, seguido por Diogo Dutra Claudiano (74) e Lais Moraes (73).</p>
+
+    <h3>Top Performers em Visitas</h3>
+    <p>Jorge Matsumoto realizou 45 visitas, seguido por Gabriel Polli Barbosa Neves e Melissa Pizzano, ambos com 14 visitas.</p>
+
+    <h3>Correlacionando Captações e Visitas</h3>
+    <p>Guilherme Lemos Filho fez 10 captações, mas não realizou atendimentos nem visitas, o que pode indicar um papel focado exclusivamente na captação.</p>
+    <p>Jorge Matsumoto, com 69 atendimentos e 45 visitas, mostra um bom equilíbrio entre atender e converter clientes.</p>
+
+    <h3>Eficiência dos Corretores</h3>
+    <p>Analisando a relação entre atendimentos e visitas:</p>
+    <ul>
+        <li>Jorge Matsumoto realizou 69 atendimentos e 45 visitas, indicando uma alta taxa de conversão.</li>
+        <li>Fabricio e Ricardo Luciano Gegenbauer Falkowski têm um número semelhante de visitas, mas Ricardo fez mais atendimentos.</li>
+    </ul>
+
+    <h2>Gráficos</h2>
+    <div class="chart">
+        <canvas id="chartCaptacoes"></canvas>
+    </div>
+    <div class="chart">
+        <canvas id="chartAtendimentos"></canvas>
+    </div>
+    <div class="chart">
+        <canvas id="chartVisitas"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctxCaptacoes = document.getElementById('chartCaptacoes').getContext('2d');
+        const chartCaptacoes = new Chart(ctxCaptacoes, {
+            type: 'bar',
+            data: {
+                labels: ['Guilherme Lemos Filho', 'Melissa Pizzano', 'Gabriel Polli Barbosa Neves', 'Guilherme Matheus', 'Rafael Kubiski'],
+                datasets: [{
+                    label: 'Captações',
+                    data: [10, 6, 5, 4, 4],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+
